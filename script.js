@@ -10,10 +10,10 @@ const WHATSAPP_MESSAGE = "Olá, Pai Bruno! Vim pelo seu site e gostaria de agend
 
 // Depoimentos — apenas as imagens, sem texto ou nomes (como você pediu)
 const TESTIMONIALS = [
-    { photo: "/public/d1.png" },
-    { photo: "/public/d2.png" },
-    { photo: "/public/d3.png" },
-    { photo: "/public/d4.png" }
+    { photo: "d1.png" },
+    { photo: "d2.png" },
+    { photo: "d3.png" },
+    { photo: "d4.png" }
 ];
 
 // ============================================================

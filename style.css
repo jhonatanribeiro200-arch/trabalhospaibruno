@@ -142,6 +142,116 @@ h1 {
     margin-top: 0.9rem;
 }
 
+/* ===== TABELA DE PREÇOS ===== */
+.pricing-section {
+    width: 100%;
+    max-width: 480px;
+    margin: 2rem 0;
+    padding: 0 1rem;
+}
+
+.pricing-card {
+    background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+    border: 1px solid #b89b5e;
+    border-radius: 16px;
+    padding: 2rem 1.5rem;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    position: relative;
+    overflow: hidden;
+}
+
+.pricing-card::before {
+    content: '';
+    position: absolute;
+    top: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: 200px;
+    background: radial-gradient(circle, rgba(139,0,0,0.4) 0%, transparent 70%);
+    pointer-events: none;
+}
+
+.pricing-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.pricing-header h2 {
+    color: #e0cda7;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.pre-consulta-badge {
+    display: inline-block;
+    background: #8b0000;
+    color: #fff;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    border: 1px solid #ff4d4d;
+    box-shadow: 0 0 10px rgba(139, 0, 0, 0.6);
+}
+
+.trust-banner {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px dashed #b89b5e;
+    color: #e0cda7;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    text-align: center;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+}
+
+.price-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    position: relative;
+    z-index: 1;
+}
+
+.price-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid rgba(184, 155, 94, 0.2);
+}
+
+.price-item:last-child {
+    border-bottom: none;
+}
+
+.service-name {
+    color: #eaeaea;
+    font-size: 0.95rem;
+}
+
+.service-price {
+    color: #ff4d4d;
+    font-weight: bold;
+    font-size: 1.05rem;
+}
+
+.price-disclaimer {
+    font-size: 0.75rem;
+    color: #888;
+    text-align: center;
+    margin-top: 1.2rem;
+    font-style: italic;
+}
+
 /* ===== DEPOIMENTOS E CARROSSEL ===== */
 .testimonials {
     max-width: 800px;
@@ -161,7 +271,7 @@ h1 {
 
 .swiper {
     width: 100%;
-    padding-bottom: 40px !important; /* Espaço para as bolinhas de navegação */
+    padding-bottom: 40px !important;
 }
 
 .swiper-slide {
@@ -173,7 +283,7 @@ h1 {
 
 .testimonial-img {
     width: 100%;
-    max-width: 450px; /* Limita a largura máxima no PC */
+    max-width: 450px;
     height: auto;
     border-radius: 16px;
     box-shadow: 0 4px 15px rgba(93, 78, 124, 0.15);
@@ -182,7 +292,6 @@ h1 {
     object-fit: contain;
 }
 
-/* Bolinhas de navegação do Carrossel */
 .swiper-pagination-bullet {
     background: var(--muted);
     opacity: 0.5;

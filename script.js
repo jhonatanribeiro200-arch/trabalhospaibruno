@@ -17,11 +17,20 @@ const TESTIMONIALS = [
 //  FIM DA CONFIGURAÇÃO
 // ============================================================
 
-// Monta o link do WhatsApp
-const whatsappBtn = document.getElementById("whatsapp-btn");
-if (whatsappBtn) {
+// Monta o link do WhatsApp para todos os botões que tiverem a classe ou o id
+const whatsappBtns = document.querySelectorAll("#whatsapp-btn, .whatsapp-click");
+if (whatsappBtns.length > 0) {
     const encodedMsg = encodeURIComponent(WHATSAPP_MESSAGE);
-    whatsappBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
+    whatsappBtns.forEach(btn => {
+        btn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
+        
+        // Rastreamento do Meta Pixel no clique do WhatsApp
+        btn.addEventListener("click", function() {
+            if (typeof fbq === 'function') {
+                fbq('track', 'Contact');
+            }
+        });
+    });
 }
 
 // Renderiza as imagens no carrossel
@@ -39,17 +48,17 @@ if (grid && Array.isArray(TESTIMONIALS)) {
 // Inicializa o Carrossel Automático (Looping infinito)
 if (typeof Swiper !== 'undefined') {
     new Swiper('.mySwiper', {
-        loop: true, // Ativa o looping infinito
+        loop: true, 
         autoplay: {
-            delay: 3000, // Tempo de 3 segundos para trocar a foto
-            disableOnInteraction: false, // Continua rodando mesmo se o usuário interagir
+            delay: 3000, 
+            disableOnInteraction: false, 
         },
         pagination: {
             el: '.swiper-pagination',
-            clickable: true, // Bolinhas clicáveis
+            clickable: true, 
         },
-        effect: 'slide', // Efeito de deslizar
-        speed: 800, // Velocidade da transição
+        effect: 'slide', 
+        speed: 800, 
     });
 }
 

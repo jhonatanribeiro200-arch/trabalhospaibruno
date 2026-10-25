@@ -2,13 +2,10 @@
 //  CONFIGURAÇÃO — JÁ PREENCHIDO COM SEUS DADOS
 // ============================================================
 
-// Número do WhatsApp (DDD 41 + número)
 const WHATSAPP_NUMBER = "554195800788";
-
-// Mensagem que já vem pré-preenchida quando a pessoa clica no botão
 const WHATSAPP_MESSAGE = "Olá, Pai Bruno! Vim pelo seu site e gostaria de agendar minha pré-consulta gratuita.";
 
-// Depoimentos — apenas as imagens, sem texto ou nomes (como você pediu)
+// Apenas as imagens, sem a pasta /public/
 const TESTIMONIALS = [
     { photo: "d1.png" },
     { photo: "d2.png" },
@@ -17,7 +14,7 @@ const TESTIMONIALS = [
 ];
 
 // ============================================================
-//  FIM DA CONFIGURAÇÃO — não precisa mexer abaixo
+//  FIM DA CONFIGURAÇÃO
 // ============================================================
 
 // Monta o link do WhatsApp
@@ -27,14 +24,33 @@ if (whatsappBtn) {
     whatsappBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
 }
 
-// Renderiza os depoimentos apenas como imagens
+// Renderiza as imagens no carrossel
 const grid = document.getElementById("testimonials-grid");
 if (grid && Array.isArray(TESTIMONIALS)) {
     grid.innerHTML = TESTIMONIALS.map(t => {
         return `
-            <img src="${t.photo}" alt="Depoimento de cliente" class="testimonial-img" loading="lazy" onerror="this.style.display='none'">
+            <div class="swiper-slide">
+                <img src="${t.photo}" alt="Depoimento de cliente" class="testimonial-img" loading="lazy" onerror="this.style.display='none'">
+            </div>
         `;
     }).join("");
+}
+
+// Inicializa o Carrossel Automático (Looping infinito)
+if (typeof Swiper !== 'undefined') {
+    new Swiper('.mySwiper', {
+        loop: true, // Ativa o looping infinito
+        autoplay: {
+            delay: 3000, // Tempo de 3 segundos para trocar a foto
+            disableOnInteraction: false, // Continua rodando mesmo se o usuário interagir
+        },
+        pagination: {
+            el: '.swiper-pagination',
+            clickable: true, // Bolinhas clicáveis
+        },
+        effect: 'slide', // Efeito de deslizar
+        speed: 800, // Velocidade da transição
+    });
 }
 
 // Ano atual no rodapé

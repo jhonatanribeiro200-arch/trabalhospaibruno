@@ -1,47 +1,80 @@
-export default async function handler(request, response) {
-    if (request.method !== 'POST') {
-        return response.status(405).json({ error: 'Método não permitido' });
-    }
+// ============================================================
+// CONFIGURAÇÕES DO SITE
+// ============================================================
+const WHATSAPP_NUMBER = "554195800788";
+const WHATSAPP_MESSAGE = "Olá, Pai Bruno! Vim pelo seu site e gostaria de agendar minha pré-consulta gratuita.";
 
-    const { eventName, eventData } = request.body;
-    const PIXEL_ID = '3771039406390855'; 
-    const ACCESS_TOKEN = 'EAApvgRXwdGUBS97hrDhBxq2J7A5HB8Xj1wBAeXfJ3mPPRU2GIOJ4RPU77zPPqb6oNM4O0idCeRlJaA01qNbhYjmZAg7JGYuBZB0C9EPWKrttK3bAGBaazNg7A4MywZCIfHdZBSmGi9s3zz6erYNg3iyRXMCZAAfL3c8FPGgP5EwJJHtffEzSnqSPPZAjtMiQZDZD';
+const TESTIMONIALS = [
+    { photo: "d1.png" },
+    { photo: "d2.png" },
+    { photo: "d3.png" },
+    { photo: "d4.png" }
+];
 
-    const payload = {
-        data: [
-            {
-                event_name: eventName || 'Lead', // Agora o padrão é Lead
-                event_time: Math.floor(Date.now() / 1000),
-                action_source: 'website',
-                event_source_url: 'https://trabalhospaibruno.vercel.app',
-                user_data: {
-                    client_ip_address: request.headers['x-forwarded-for'] || request.socket.remoteAddress,
-                    client_user_agent: request.headers['user-agent'],
-                },
-                custom_data: eventData || {},
-            },
-        ],
-        access_token: ACCESS_TOKEN,
-    };
+// ============================================================
+// BOTÃO DO WHATSAPP E RASTREAMENTO (PIXEL + API)
+// ============================================================
+const whatsappBtn = document.getElementById("whatsapp-btn");
 
-    try {
-        const metaResponse = await fetch(`https://graph.facebook.com/v19.0/${PIXEL_ID}/events`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload),
-        });
+if (whatsappBtn) {
+    const encodedMsg = encodeURIComponent(WHATSAPP_MESSAGE);
+    whatsappBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
+    
+    whatsappBtn.addEventListener("click", function(e) {
+        e.preventDefault(); 
+        const urlWhatsApp = this.href;
 
-        const metaData = await metaResponse.json();
-        
-        if (metaData.error) {
-            console.error('Erro retornado pela Meta:', metaData.error);
-            return response.status(400).json({ error: metaData.error });
+        // 1. Dispara o Pixel no Navegador (Evento Purchase sem valor)
+        if (typeof fbq === 'function') {
+            fbq('track', 'Purchase');
         }
 
-        return response.status(200).json({ success: true, metaData });
+        // 2. Dispara a API de Conversões na Vercel (Evento Purchase)
+        fetch('/api/capi', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                eventName: 'Purchase',
+                eventData: { 
+                    content_name: 'Clique no WhatsApp'
+                }
+            }),
+            keepalive: true 
+        })
+        .then(() => { window.location.href = urlWhatsApp; })
+        .catch((error) => { 
+            console.error('Erro na API:', error);
+            window.location.href = urlWhatsApp; 
+        });
 
-    } catch (error) {
-        console.error('Erro ao enviar evento para a Meta:', error);
-        return response.status(500).json({ error: 'Erro interno no servidor' });
-    }
+        setTimeout(() => { window.location.href = urlWhatsApp; }, 600);
+    });
 }
+
+// ============================================================
+// CARROSSEL DE DEPOIMENTOS (SWIPER)
+// ============================================================
+const grid = document.getElementById("testimonials-grid");
+
+if (grid && Array.isArray(TESTIMONIALS)) {
+    grid.innerHTML = TESTIMONIALS.map(t => `
+        <div class="swiper-slide">
+            <img src="${t.photo}" alt="Depoimento" class="testimonial-img" loading="lazy" onerror="this.style.display='none'">
+        </div>
+    `).join("");
+}
+
+if (typeof Swiper !== 'undefined') {
+    new Swiper('.mySwiper', {
+        loop: true, 
+        autoplay: { delay: 3000, disableOnInteraction: false },
+        pagination: { el: '.swiper-pagination', clickable: true },
+        speed: 800, 
+    });
+}
+
+// ============================================================
+// ANO ATUAL NO RODAPÉ
+// ============================================================
+const yearEl = document.getElementById("year");
+if (yearEl) yearEl.textContent = new Date().getFullYear();

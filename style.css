@@ -15,7 +15,7 @@ body {
 main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem 0; }
 
 /* HERO */
-.hero { max-width: 480px; width: 100%; text-align: center; padding: 1rem; }
+.hero { max-width: 480px; width: 100%; text-align: center; padding: 1rem; margin-bottom: 2rem; }
 .profile-pic-wrapper {
     width: 140px; height: 140px; margin: 0 auto 1.5rem; border-radius: 50%;
     padding: 4px; background: linear-gradient(135deg, var(--accent), var(--primary));
@@ -46,42 +46,8 @@ h1 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700
 }
 .cta-note { font-size: 0.85rem; color: var(--muted); margin-top: 0.9rem; }
 
-/* TABELA DE PREÇOS */
-.pricing-section { width: 100%; max-width: 480px; margin: 2rem 0; padding: 0 1rem; }
-.pricing-card {
-    background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
-    border: 1px solid #b89b5e; border-radius: 16px; padding: 2rem 1.5rem;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); position: relative; overflow: hidden;
-}
-.pricing-card::before {
-    content: ''; position: absolute; top: -50px; left: 50%; transform: translateX(-50%);
-    width: 200px; height: 200px; background: radial-gradient(circle, rgba(139,0,0,0.4) 0%, transparent 70%);
-    pointer-events: none;
-}
-.pricing-header { text-align: center; margin-bottom: 1.5rem; position: relative; z-index: 1; }
-.pricing-header h2 {
-    color: #e0cda7; font-family: 'Cormorant Garamond', serif; font-size: 1.8rem;
-    margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 2px;
-}
-.pre-consulta-badge {
-    display: inline-block; background: #8b0000; color: #fff; padding: 0.4rem 1rem;
-    border-radius: 20px; font-size: 0.85rem; font-weight: bold; letter-spacing: 1px;
-    border: 1px solid #ff4d4d; box-shadow: 0 0 10px rgba(139, 0, 0, 0.6);
-}
-.trust-banner {
-    background: rgba(255, 215, 0, 0.1); border: 1px dashed #b89b5e; color: #e0cda7;
-    padding: 0.8rem; border-radius: 8px; font-size: 0.85rem; text-align: center;
-    margin-bottom: 1.5rem; line-height: 1.4;
-}
-.price-list { display: flex; flex-direction: column; gap: 0.8rem; position: relative; z-index: 1; }
-.price-item { display: flex; justify-content: space-between; align-items: center; padding-bottom: 0.5rem; border-bottom: 1px solid rgba(184, 155, 94, 0.2); }
-.price-item:last-child { border-bottom: none; }
-.service-name { color: #eaeaea; font-size: 0.95rem; }
-.service-price { color: #ff4d4d; font-weight: bold; font-size: 1.05rem; }
-.price-disclaimer { font-size: 0.75rem; color: #888; text-align: center; margin-top: 1.2rem; font-style: italic; }
-
 /* DEPOIMENTOS E CARROSSEL */
-.testimonials { max-width: 800px; width: 100%; padding: 3rem 1rem 2rem; overflow: hidden; }
+.testimonials { max-width: 800px; width: 100%; padding: 2rem 1rem; overflow: hidden; }
 .testimonials h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; text-align: center; color: var(--primary); margin-bottom: 2rem; font-weight: 600; }
 .swiper { width: 100%; padding-bottom: 40px !important; }
 .swiper-slide { display: flex; justify-content: center; align-items: center; width: 100%; }
@@ -89,7 +55,8 @@ h1 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700
 .swiper-pagination-bullet { background: var(--muted); opacity: 0.5; }
 .swiper-pagination-bullet-active { background: var(--whatsapp); opacity: 1; transform: scale(1.2); }
 
-footer { text-align: center; padding: 2rem 1rem; font-size: 0.8rem; color: var(--muted); border-top: 1px solid #ece7dd; margin-top: 2rem; width: 100%; }
+/* FOOTER */
+footer { text-align: center; padding: 2rem 1rem; font-size: 0.8rem; color: var(--muted); border-top: 1px solid #ece7dd; margin-top: auto; width: 100%; }
 .footer-note { margin-top: 0.35rem; font-size: 0.75rem; opacity: 0.75; }
 
 @media (min-width: 640px) {

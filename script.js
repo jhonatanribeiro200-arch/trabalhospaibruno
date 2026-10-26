@@ -25,17 +25,17 @@ if (whatsappBtn) {
         e.preventDefault(); 
         const urlWhatsApp = this.href;
 
-        // 1. Dispara o Pixel no Navegador
+        // 1. Dispara o Pixel no Navegador (Evento Lead)
         if (typeof fbq === 'function') {
-            fbq('track', 'Contact');
+            fbq('track', 'Lead');
         }
 
-        // 2. Dispara a API de Conversões na Vercel (Servidor)
+        // 2. Dispara a API de Conversões na Vercel (Evento Lead)
         fetch('/api/capi', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                eventName: 'Contact',
+                eventName: 'Lead',
                 eventData: { content_name: 'Clique no WhatsApp' }
             }),
             keepalive: true // Garante que o envio não seja cancelado ao redirecionar

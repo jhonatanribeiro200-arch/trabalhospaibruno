@@ -33,7 +33,6 @@ export default async function handler(request, response) {
 
         const metaData = await metaResponse.json();
         
-        // Se houver erro no Facebook, ele vai aparecer no log da Vercel
         if (metaData.error) {
             console.error('Erro retornado pela Meta:', metaData.error);
             return response.status(400).json({ error: metaData.error });

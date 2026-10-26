@@ -21,37 +21,33 @@ if (whatsappBtn) {
     whatsappBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
     
     whatsappBtn.addEventListener("click", function(e) {
-        // Impede o navegador de pular para o WhatsApp imediatamente
         e.preventDefault(); 
         const urlWhatsApp = this.href;
 
-        // 1. Dispara o Pixel no Navegador (Evento Lead)
+        // 1. Dispara o Pixel no Navegador (Evento Purchase sem valor)
         if (typeof fbq === 'function') {
-            fbq('track', 'Lead');
+            fbq('track', 'Purchase');
         }
 
-        // 2. Dispara a API de Conversões na Vercel (Evento Lead)
+        // 2. Dispara a API de Conversões na Vercel (Evento Purchase)
         fetch('/api/capi', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                eventName: 'Lead',
-                eventData: { content_name: 'Clique no WhatsApp' }
+                eventName: 'Purchase',
+                eventData: { 
+                    content_name: 'Clique no WhatsApp'
+                }
             }),
-            keepalive: true // Garante que o envio não seja cancelado ao redirecionar
+            keepalive: true 
         })
-        .then(() => {
-            window.location.href = urlWhatsApp; 
-        })
-        .catch((error) => {
+        .then(() => { window.location.href = urlWhatsApp; })
+        .catch((error) => { 
             console.error('Erro na API:', error);
             window.location.href = urlWhatsApp; 
         });
 
-        // Segurança: se a API ou o Pixel demorarem, redireciona em 0.6s
-        setTimeout(() => {
-            window.location.href = urlWhatsApp;
-        }, 600);
+        setTimeout(() => { window.location.href = urlWhatsApp; }, 600);
     });
 }
 
@@ -71,14 +67,8 @@ if (grid && Array.isArray(TESTIMONIALS)) {
 if (typeof Swiper !== 'undefined') {
     new Swiper('.mySwiper', {
         loop: true, 
-        autoplay: { 
-            delay: 3000, 
-            disableOnInteraction: false 
-        },
-        pagination: { 
-            el: '.swiper-pagination', 
-            clickable: true 
-        },
+        autoplay: { delay: 3000, disableOnInteraction: false },
+        pagination: { el: '.swiper-pagination', clickable: true },
         speed: 800, 
     });
 }
@@ -87,6 +77,4 @@ if (typeof Swiper !== 'undefined') {
 // ANO ATUAL NO RODAPÉ
 // ============================================================
 const yearEl = document.getElementById("year");
-if (yearEl) {
-    yearEl.textContent = new Date().getFullYear();
-}
+if (yearEl) yearEl.textContent = new Date().getFullYear();

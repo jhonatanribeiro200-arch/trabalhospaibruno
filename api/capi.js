@@ -10,7 +10,7 @@ export default async function handler(request, response) {
     const payload = {
         data: [
             {
-                event_name: eventName || 'Contact',
+                event_name: eventName || 'Lead', // Agora o padrão é Lead
                 event_time: Math.floor(Date.now() / 1000),
                 action_source: 'website',
                 event_source_url: 'https://trabalhospaibruno.vercel.app',

@@ -1,7 +1,7 @@
 // ============================================================
 // CONFIGURAÇÕES DO SITE
 // ============================================================
-const WHATSAPP_NUMBER = "554195800788";
+const WHATSAPP_NUMBER = "5521968506455";
 const WHATSAPP_MESSAGE = "Olá, Pai Bruno! Vim pelo seu site e gostaria de agendar minha pré-consulta gratuita.";
 
 const TESTIMONIALS = [
@@ -12,7 +12,7 @@ const TESTIMONIALS = [
 ];
 
 // ============================================================
-// BOTÃO DO WHATSAPP E RASTREAMENTO (PIXEL + API)
+// BOTÃO DO WHATSAPP E RASTREAMENTO AUTOMÁTICO (APENAS PIXEL)
 // ============================================================
 const whatsappBtn = document.getElementById("whatsapp-btn");
 
@@ -21,33 +21,12 @@ if (whatsappBtn) {
     whatsappBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
     
     whatsappBtn.addEventListener("click", function(e) {
-        e.preventDefault(); 
-        const urlWhatsApp = this.href;
-
-        // 1. Dispara o Pixel no Navegador (Evento Purchase sem valor)
+        // Dispara o Pixel no Navegador (Evento Purchase para Vendas)
         if (typeof fbq === 'function') {
             fbq('track', 'Purchase');
         }
-
-        // 2. Dispara a API de Conversões na Vercel (Evento Purchase)
-        fetch('/api/capi', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                eventName: 'Purchase',
-                eventData: { 
-                    content_name: 'Clique no WhatsApp'
-                }
-            }),
-            keepalive: true 
-        })
-        .then(() => { window.location.href = urlWhatsApp; })
-        .catch((error) => { 
-            console.error('Erro na API:', error);
-            window.location.href = urlWhatsApp; 
-        });
-
-        setTimeout(() => { window.location.href = urlWhatsApp; }, 600);
+        
+        // O link abre normalmente (não precisamos mais do preventDefault e nem do setTimeout)
     });
 }
 

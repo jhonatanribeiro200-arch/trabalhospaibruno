@@ -1,57 +1,66 @@
-// ============================================================
-// CONFIGURAÇÕES DO SITE
-// ============================================================
-const WHATSAPP_NUMBER = "554195800788"; // Número DDD 41 restaurado
-const WHATSAPP_MESSAGE = "Olá, Pai Bruno! Vim pelo seu site e gostaria de agendar minha pré-consulta gratuita.";
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-const TESTIMONIALS = [
-    { photo: "d1.png" },
-    { photo: "d2.png" },
-    { photo: "d3.png" },
-    { photo: "d4.png" }
-];
-
-// ============================================================
-// BOTÃO DO WHATSAPP E RASTREAMENTO (APENAS PIXEL DO NAVEGADOR)
-// ============================================================
-const whatsappBtn = document.getElementById("whatsapp-btn");
-
-if (whatsappBtn) {
-    const encodedMsg = encodeURIComponent(WHATSAPP_MESSAGE);
-    whatsappBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
-    
-    whatsappBtn.addEventListener("click", function() {
-        // Dispara o evento Purchase apenas pelo navegador (sem API)
-        if (typeof fbq === 'function') {
-            fbq('track', 'Purchase');
-        }
-    });
+:root {
+    --bg: #faf7f2; --card: #ffffff; --primary: #5d4e7c; --accent: #c9a227;
+    --text: #2a2a2a; --muted: #6b6b6b; --whatsapp: #25D366; --whatsapp-dark: #1ebe57;
 }
 
-// ============================================================
-// CARROSSEL DE DEPOIMENTOS (SWIPER)
-// ============================================================
-const grid = document.getElementById("testimonials-grid");
-
-if (grid && Array.isArray(TESTIMONIALS)) {
-    grid.innerHTML = TESTIMONIALS.map(t => `
-        <div class="swiper-slide">
-            <img src="${t.photo}" alt="Depoimento" class="testimonial-img" loading="lazy" onerror="this.style.display='none'">
-        </div>
-    `).join("");
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    background-color: var(--bg); color: var(--text);
+    line-height: 1.6; min-height: 100vh; display: flex; flex-direction: column;
+    -webkit-font-smoothing: antialiased;
 }
 
-if (typeof Swiper !== 'undefined') {
-    new Swiper('.mySwiper', {
-        loop: true, 
-        autoplay: { delay: 3000, disableOnInteraction: false },
-        pagination: { el: '.swiper-pagination', clickable: true },
-        speed: 800, 
-    });
-}
+main { flex: 1; display: flex; flex-direction: column; align-items: center; padding: 2rem 1rem 0; }
 
-// ============================================================
-// ANO ATUAL NO RODAPÉ
-// ============================================================
-const yearEl = document.getElementById("year");
-if (yearEl) yearEl.textContent = new Date().getFullYear();
+/* HERO */
+.hero { max-width: 480px; width: 100%; text-align: center; padding: 1rem; margin-bottom: 2rem; }
+.profile-pic-wrapper {
+    width: 140px; height: 140px; margin: 0 auto 1.5rem; border-radius: 50%;
+    padding: 4px; background: linear-gradient(135deg, var(--accent), var(--primary));
+}
+.profile-pic {
+    width: 100%; height: 100%; border-radius: 50%; background: linear-gradient(135deg, #f0ece4, #e8e2d5);
+    display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden;
+}
+.profile-initials { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 700; color: var(--primary); }
+.profile-pic img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+
+h1 { font-family: 'Cormorant Garamond', serif; font-size: 2rem; font-weight: 700; color: var(--primary); margin-bottom: 0.25rem; }
+.subtitle { font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; color: var(--accent); font-weight: 600; margin-bottom: 1.5rem; }
+.bio { color: var(--muted); font-size: 1rem; line-height: 1.7; margin-bottom: 2rem; padding: 0 0.5rem; }
+
+/* BOTÃO WHATSAPP */
+.btn-whatsapp {
+    display: inline-flex; align-items: center; justify-content: center; gap: 0.6rem;
+    width: 100%; max-width: 380px; padding: 1.1rem 1.5rem; background-color: var(--whatsapp);
+    color: #fff; text-decoration: none; font-weight: 600; font-size: 1.05rem;
+    border-radius: 50px; box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+    transition: all 0.25s ease; animation: pulse 2.5s infinite;
+}
+.btn-whatsapp:hover { background-color: var(--whatsapp-dark); transform: translateY(-2px); animation: none; }
+@keyframes pulse {
+    0%, 100% { box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35); }
+    50% { box-shadow: 0 6px 30px rgba(37, 211, 102, 0.55); }
+}
+.cta-note { font-size: 0.85rem; color: var(--muted); margin-top: 0.9rem; }
+
+/* DEPOIMENTOS E CARROSSEL */
+.testimonials { max-width: 800px; width: 100%; padding: 2rem 1rem; overflow: hidden; }
+.testimonials h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; text-align: center; color: var(--primary); margin-bottom: 2rem; font-weight: 600; }
+.swiper { width: 100%; padding-bottom: 40px !important; }
+.swiper-slide { display: flex; justify-content: center; align-items: center; width: 100%; }
+.testimonial-img { width: 100%; max-width: 450px; height: auto; border-radius: 16px; box-shadow: 0 4px 15px rgba(93, 78, 124, 0.15); border: 1px solid rgba(93, 78, 124, 0.08); display: block; object-fit: contain; }
+.swiper-pagination-bullet { background: var(--muted); opacity: 0.5; }
+.swiper-pagination-bullet-active { background: var(--whatsapp); opacity: 1; transform: scale(1.2); }
+
+/* FOOTER */
+footer { text-align: center; padding: 2rem 1rem; font-size: 0.8rem; color: var(--muted); border-top: 1px solid #ece7dd; margin-top: auto; width: 100%; }
+.footer-note { margin-top: 0.35rem; font-size: 0.75rem; opacity: 0.75; }
+
+@media (min-width: 640px) {
+    h1 { font-size: 2.4rem; }
+    .bio { font-size: 1.05rem; }
+    .profile-pic-wrapper { width: 160px; height: 160px; }
+}

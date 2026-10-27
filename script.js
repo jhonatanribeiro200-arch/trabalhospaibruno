@@ -1,7 +1,7 @@
 // ============================================================
 // CONFIGURAÇÕES DO SITE
 // ============================================================
-const WHATSAPP_NUMBER = "5521968506455";
+const WHATSAPP_NUMBER = "554195800788"; // Número DDD 41 restaurado
 const WHATSAPP_MESSAGE = "Olá, Pai Bruno! Vim pelo seu site e gostaria de agendar minha pré-consulta gratuita.";
 
 const TESTIMONIALS = [
@@ -12,7 +12,7 @@ const TESTIMONIALS = [
 ];
 
 // ============================================================
-// BOTÃO DO WHATSAPP E RASTREAMENTO AUTOMÁTICO (APENAS PIXEL)
+// BOTÃO DO WHATSAPP E RASTREAMENTO (APENAS PIXEL DO NAVEGADOR)
 // ============================================================
 const whatsappBtn = document.getElementById("whatsapp-btn");
 
@@ -20,13 +20,11 @@ if (whatsappBtn) {
     const encodedMsg = encodeURIComponent(WHATSAPP_MESSAGE);
     whatsappBtn.href = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodedMsg}`;
     
-    whatsappBtn.addEventListener("click", function(e) {
-        // Dispara o Pixel no Navegador (Evento Purchase para Vendas)
+    whatsappBtn.addEventListener("click", function() {
+        // Dispara o evento Purchase apenas pelo navegador (sem API)
         if (typeof fbq === 'function') {
             fbq('track', 'Purchase');
         }
-        
-        // O link abre normalmente (não precisamos mais do preventDefault e nem do setTimeout)
     });
 }
 
